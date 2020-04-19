@@ -1,24 +1,5 @@
-# README
+This is a project to showcase the skills I learned during the odin project curriculum. It  is supposed to be a copy of facebook using rails.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+**Check the trello board for the project:**
+https://trello.com/b/qEdRfbxj/rails-book
