@@ -4,8 +4,12 @@
 <% end %>
 
 
-<% @users.each do |usr| %>
-    <!-- Image -->
+<% @users.each do |usr| %>    
+    <% if usr.image.attached? %>
+        <%= image_tag(usr.image) %>
+    <% else %>
+        <%= image_tag("default.jpg") %>
+    <% end %>
     <%= link_to usr.first_name + usr.last_name, usr %>
     <br>
 <% end %>

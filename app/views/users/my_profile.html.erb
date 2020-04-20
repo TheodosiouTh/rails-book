@@ -1,0 +1,14 @@
+<% if current_user.image.attached? %>
+    <%= image_tag(current_user.image) %>
+<% else %>
+    <%= image_tag("default.jpg") %>
+<% end %>
+
+<%= form_for current_user, url:'/my_profile', html: { multipart: true } do |f| %>
+    <div class="field">
+        Upload new Profile Image: <%= f.file_field :image %>
+    </div>
+    <%= f.submit "Upload"%>
+<% end %>
+
+Name: <%= current_user.first_name + current_user.last_name  %> <br>
