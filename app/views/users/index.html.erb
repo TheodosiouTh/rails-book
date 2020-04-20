@@ -1,0 +1,11 @@
+<%= form_tag('/', method: 'get') do %>
+      <%= text_field_tag(:full_name, params[:full_name]) %>
+      <%= submit_tag("Search", name: nil) %>
+<% end %>
+
+
+<% @users.each do |usr| %>
+    <!-- Image -->
+    <%= link_to usr.first_name + usr.last_name, usr %>
+    <br>
+<% end %>

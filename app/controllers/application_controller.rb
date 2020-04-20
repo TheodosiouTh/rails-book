@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
     private
         def require_login
-            if current_user.nil? && !['/users/sign_up', '/users/sign_in'].include?(request.fullpath)
+            if current_user.nil? && !['/users/sign_up', '/users/sign_in','/users'].include?(request.fullpath)
                 redirect_to '/users/sign_in'
             end
         end

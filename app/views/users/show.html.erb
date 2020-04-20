@@ -1,0 +1,18 @@
+<!-- Image -->
+Name: <%= @user.first_name + @user.last_name  %> <br>
+
+<%= form_tag('/users/'+ @user.id.to_s) do %>
+    <% if !@outgoing.empty?  %>
+        <% if !@outgoing.first.accepted %>
+            <%= submit_tag("Pending", name: nil,disabled: true) %>
+        <% end %>
+    <% elsif !@incomming.empty? %>
+        <% if !@incomming.first.accepted %>
+            <%= hidden_field_tag :do, "accept" %>
+            <%= submit_tag("Accept Friend Request", name: nil) %>
+        <% end %>
+    <% else  %>
+        <%= hidden_field_tag :do, "friend_request" %>
+        <%= submit_tag("Friend Request", name: nil) %>
+    <% end  %>
+<% end %>
