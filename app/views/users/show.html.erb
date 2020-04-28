@@ -3,6 +3,7 @@
 <% else %>
     <%= image_tag("default.jpg") %>
 <% end %>
+
 Name: <%= @user.first_name + @user.last_name  %> <br>
 
 <%= form_tag('/users/'+ @user.id.to_s) do %>

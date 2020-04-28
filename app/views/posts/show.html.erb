@@ -1,0 +1,6 @@
+<%= @post.title %> <br>
+<%= @post.title %>
+<% if @post.image.attached? %>
+    <%= image_tag(@post.image) %>
+<% end %>
+Posted By: <%= "#{@creator.first_name} #{@creator.last_name}" %> 

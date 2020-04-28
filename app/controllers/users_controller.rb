@@ -37,9 +37,7 @@ class UsersController < ApplicationController
     end
 
     def my_profile
-        puts current_user.image.attached?
         if !params[:user].nil?
-            puts params
             current_user.image.attach(params[:user][:image])
         end
     end 
