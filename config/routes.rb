@@ -4,8 +4,11 @@ Rails.application.routes.draw do
   get 'posts/show'
   devise_for :users
 
-  root to: "users#index"
+  root to: "posts#index"
+  get '/', to: 'posts#my_like'
+  post '/', to: 'posts#my_comment'
 
+  get '/users', to: "users#index"
   get '/users/:id', to: 'users#show', as: :user
   post '/users/:id', to: 'users#show'
 

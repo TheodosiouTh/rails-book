@@ -1,6 +1,8 @@
 <header>
     <% if current_user %>
-        <%= link_to 'Home', '/' %>
+        <%= link_to 'Home', root_url %>
+        <%= link_to 'New Post', '/posts/new' %>
+        <%= link_to 'Find', '/users' %>
         <%= link_to 'My Profile', '/my_profile' %>
         <%= link_to 'Log out', '/logout' %>
     <% else %>

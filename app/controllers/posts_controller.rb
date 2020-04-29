@@ -1,4 +1,40 @@
 class PostsController < ApplicationController
+  def index
+    #get friends
+    @friends = []
+
+    incomming = current_user.incomming
+    incomming.each do |rqst|
+      if rqst.accepted
+        @friends << User.find(rqst.from_id)
+      end
+    end
+
+    outgoing = current_user.outgoing
+    outgoing.each do |rqst|
+      if rqst.accepted
+        @friends << User.find(rqst.from_id)
+      end
+    end
+
+
+    # get posts from friends
+    @friends.each do |friend|
+      if @posts.nil?
+        @posts = friend.posts
+      else
+        @posts = @posts.or(friend.posts)
+      end
+    end
+    #get newer posts first
+    @posts = @posts.order(created_at: :desc)
+
+    @likes = Like.where(user_id: current_user.id)
+
+    @comment = Comment.new
+    @like = Like.new
+  end
+
   def new
     @post = Post.new
   end
@@ -9,14 +45,13 @@ class PostsController < ApplicationController
       if !params[:post][:image].nil?
         @post.image.attach(params[:post][:image])
       end
-      redirect_to @post
+      render "index"
     else
       render "new"
     end
   end
 
   def show
-
     @post = Post.find(params[:id])
     @creator = User.find(@post.creator_id)
     @likes = Like.where(user_id: current_user.id)
@@ -29,7 +64,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comment = Comment.new(comment_params)
     @comment.save
-    redirect_to @post
+    render "index"
   end
 
   def my_like
@@ -43,7 +78,7 @@ class PostsController < ApplicationController
       @like = Like.new(user_id: current_user.id, post_id: params[:id])
       @like.save
     end
-    redirect_to @post
+    render "index"
   end
 
 private

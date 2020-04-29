@@ -1,0 +1,45 @@
+<%= link_to 'Post Something', '/posts/new' %> <br>
+<% if !@posts.nil? %>
+    <% @posts.each do |post| %>
+        <%= post.title %> <br>
+        <%= post.content %>
+        <% if post.image.attached? %>
+            <%= image_tag(post.image) %>
+        <% end %>
+
+        <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_like'), method: :get ) do |f| %>
+            <% if @likes.nil? || @likes.where(post_id: post.id).first.nil? %>
+                <%= f.submit "Like" %>
+            <% else %>
+                <%= f.submit "Liked", :disabled => true %>
+            <% end %>
+        <% end %>
+
+        Posted By: <%= "#{User.find(post.creator_id).first_name} #{User.find(post.creator_id).last_name}" %> 
+
+        <!-- comment -->
+        <%= form_for @comment, :url => url_for(:controller => 'posts', :action => 'my_comment')  do |f| %>    
+            <%= f.label :content, "Your comment:" %> <br>
+            <%= f.text_area :content, cols: "60", rows: "2" %> <br>
+            <%= f.submit "Submit" %>
+        <% end %>
+
+        <!-- Show comments -->
+        Comments(<%= Post.find(post.id).comments.count%>): <br>
+        <% Post.find(post.id).comments.each do |comment| %>
+            <%= comment.content %> <br>
+            Comment By: <%= "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}" %><br>
+            <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_like'), method: :get ) do |f| %>
+                <% if @likes.nil? || @likes.where(comment_id: comment.id).first.nil? %>
+                    <%= f.hidden_field :comment_id, :value => comment.id %>
+                    <%= f.submit "Like" %>
+                <% else %>
+                    <%= f.submit "Liked", :disabled => true %>
+                <% end %>
+            <% end %>
+        <% end %>
+        <br> <br>
+    <% end %>
+<% else %>
+    No post found! Go to <%= link_to 'Find', '/users' %> to find friends
+<% end %>
