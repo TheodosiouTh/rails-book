@@ -3,6 +3,15 @@
 <% if @post.image.attached? %>
     <%= image_tag(@post.image) %>
 <% end %>
+
+<%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_like'), method: :get ) do |f| %>
+    <% if @likes.nil? || @likes.where(post_id: params[:id]).first.nil? %>
+        <%= f.submit "Like" %>
+    <% else %>
+        <%= f.submit "Liked", :disabled => true %>
+    <% end %>
+<% end %>
+
 Posted By: <%= "#{@creator.first_name} #{@creator.last_name}" %> 
 
 <!-- comment -->
@@ -13,8 +22,16 @@ Posted By: <%= "#{@creator.first_name} #{@creator.last_name}" %>
 <% end %>
 
 <!-- Show comments -->
+Comments(<%= Post.find(params[:id]).comments.count%>): <br>
 <% Post.find(params[:id]).comments.each do |comment| %>
     <%= comment.content %> <br>
-    Comment By: <%= "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}" %>
-
+    Comment By: <%= "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}" %><br>
+    <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_like'), method: :get ) do |f| %>
+        <% if @likes.nil? || @likes.where(comment_id: comment.id).first.nil? %>
+            <%= f.hidden_field :comment_id, :value => comment.id %>
+            <%= f.submit "Like" %>
+        <% else %>
+            <%= f.submit "Liked", :disabled => true %>
+        <% end %>
+    <% end %>
 <% end %>

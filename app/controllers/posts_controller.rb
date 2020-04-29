@@ -16,16 +16,33 @@ class PostsController < ApplicationController
   end
 
   def show
+
     @post = Post.find(params[:id])
     @creator = User.find(@post.creator_id)
+    @likes = Like.where(user_id: current_user.id)
 
     @comment = Comment.new
+    @like = Like.new
   end
 
   def my_comment
     @post = Post.find(params[:id])
     @comment = Comment.new(comment_params)
     @comment.save
+    redirect_to @post
+  end
+
+  def my_like
+    @post = Post.find(params[:id])
+    if !params[:like].nil? && !params[:like][:comment_id].nil?
+      #like comment
+      @like = Like.new(user_id: current_user.id, comment_id: params[:like][:comment_id])
+      @like.save
+    else
+      # like post
+      @like = Like.new(user_id: current_user.id, post_id: params[:id])
+      @like.save
+    end
     redirect_to @post
   end
 

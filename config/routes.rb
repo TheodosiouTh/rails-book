@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   get '/post/:id', to: 'posts#show'
   post '/post/:id', to: 'posts#my_comment'
 
+  
+  get '/post/:id/liked', to: 'posts#my_like'
+
 
 
   devise_scope :user do
