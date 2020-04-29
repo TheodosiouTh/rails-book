@@ -4,3 +4,17 @@
     <%= image_tag(@post.image) %>
 <% end %>
 Posted By: <%= "#{@creator.first_name} #{@creator.last_name}" %> 
+
+<!-- comment -->
+<%= form_for @comment, :url => url_for(:controller => 'posts', :action => 'my_comment')  do |f| %>    
+    <%= f.label :content, "Your comment:" %> <br>
+    <%= f.text_area :content, cols: "60", rows: "2" %> <br>
+    <%= f.submit "Submit" %>
+<% end %>
+
+<!-- Show comments -->
+<% Post.find(params[:id]).comments.each do |comment| %>
+    <%= comment.content %> <br>
+    Comment By: <%= "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}" %>
+
+<% end %>

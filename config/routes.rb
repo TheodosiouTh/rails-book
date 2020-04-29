@@ -14,7 +14,10 @@ Rails.application.routes.draw do
 
   get '/post/new', to: 'posts#new'
   post '/post/new', to: 'posts#create'
-  post '/post/:id', to: 'posts#show'
+  get '/post/:id', to: 'posts#show'
+  post '/post/:id', to: 'posts#my_comment'
+
+
 
   devise_scope :user do
     get "/signup", to: "devise/registrations#new"
@@ -22,5 +25,5 @@ Rails.application.routes.draw do
     get "/logout", to: "devise/sessions#destroy"
   end
 
-  resources :posts
+  resources :posts, :comments
 end
