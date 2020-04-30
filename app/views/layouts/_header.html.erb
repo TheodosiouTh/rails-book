@@ -12,7 +12,7 @@
                 <ul class="dropdown-menu">
                     <% @pending.each do |request| %>
                         <li> <% user = User.find(request.from_id) %>
-                            <%= link_to "#{user.first_name} #{user.last_name}", "/users/#{user.id}" %>
+                            <%= link_to "#{user.first_name} #{user.last_name}", "/user/#{user.id}" %>
                         </li>
                     <% end %>
                 </ul>
@@ -24,6 +24,6 @@
         <%= link_to 'Log out', '/logout' %>
     <% else %>
         <%= link_to 'Log in', '/login' %>
-        <%= link_to 'Sign Up', '/sign_up' %>
+        <%= link_to 'Sign Up', '/signup' %>
     <% end %>
 </header>

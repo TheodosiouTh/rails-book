@@ -5,14 +5,14 @@ class ApplicationController < ActionController::Base
 
     protected
         def configure_permitted_parameters
-            devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name,:last_name, :email, :password)}
-            devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :last_name, :image, :email, :password, :current_password)}
+            devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name,:last_name, :email, :password, :provider, :uid)}
+            devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :last_name, :image, :email, :password, :current_password, :provider, :uid)}
         end
 
     private
         def require_login
-            if current_user.nil? && !['/users/sign_up', '/users/sign_in','/users'].include?(request.fullpath)
-                redirect_to '/users/sign_in'
+            if current_user.nil? && !['/signup', '/login','/users','/users/sign_in'].include?(request.fullpath)
+                redirect_to '/login'
             end
         end
 

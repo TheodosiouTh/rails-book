@@ -6,6 +6,9 @@ ruby '2.3.3'
 #My Gems
 #Begin
 gem 'devise'
+
+gem 'omniauth'
+gem 'omniauth-facebook'
 #End
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

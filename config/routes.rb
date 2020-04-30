@@ -2,15 +2,14 @@ Rails.application.routes.draw do
   get 'posts/new'
   get 'posts/create'
   get 'posts/show'
-  devise_for :users
 
   root to: "posts#index"
   get '/', to: 'posts#my_like'
   post '/', to: 'posts#my_comment'
 
   get '/users', to: "users#index"
-  get '/users/:id', to: 'users#show', as: :user
-  post '/users/:id', to: 'users#show'
+  get '/user/:id', to: 'users#show', as: :user
+  post '/user/:id', to: 'users#show'
 
   get '/my_profile', to: 'users#my_profile'
   patch '/my_profile', to: 'users#my_profile'
@@ -23,7 +22,7 @@ Rails.application.routes.draw do
   
   get '/post/:id/liked', to: 'posts#my_like'
 
-
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   devise_scope :user do
     get "/signup", to: "devise/registrations#new"

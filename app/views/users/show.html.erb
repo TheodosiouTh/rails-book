@@ -6,7 +6,7 @@
 
 Name: <%= @user.first_name + @user.last_name  %> <br>
 
-<%= form_tag('/users/'+ @user.id.to_s) do %>
+<%= form_tag('/user/'+ @user.id.to_s) do %>
     <% if !@outgoing.empty?  %>
         <% if !@outgoing.first.accepted %>
             <%= submit_tag("Pending", name: nil,disabled: true) %>
