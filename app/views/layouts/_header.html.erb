@@ -3,6 +3,23 @@
         <%= link_to 'Home', root_url %>
         <%= link_to 'New Post', '/posts/new' %>
         <%= link_to 'Find', '/users' %>
+
+        <!--Friend Requests -->
+        <% if !@pending.empty? %>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Pending Friend Requests(<%= @pending.count %>)
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <% @pending.each do |request| %>
+                        <li> <% user = User.find(request.from_id) %>
+                            <%= link_to "#{user.first_name} #{user.last_name}", "/users/#{user.id}" %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        <% end %>
+
+
         <%= link_to 'My Profile', '/my_profile' %>
         <%= link_to 'Log out', '/logout' %>
     <% else %>

@@ -27,7 +27,9 @@ class PostsController < ApplicationController
       end
     end
     #get newer posts first
-    @posts = @posts.order(created_at: :desc)
+    if !@posts.nil?
+      @posts = @posts.order(created_at: :desc)
+    end
 
     @likes = Like.where(user_id: current_user.id)
 

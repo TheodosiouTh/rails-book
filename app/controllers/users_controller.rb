@@ -25,7 +25,7 @@ class UsersController < ApplicationController
         if request.post?
             case params[:do]
                 when "friend_request"
-                    FriendRequest.create(from_id: current_user.id, to_id: params[:id])
+                    FriendRequest.create(from_id: current_user.id, to_id: params[:id], accepted: false)
                 when "accept"
                     if @outgoing.empty?
                         @incomming.each {|item| item.update(accepted: true)}
@@ -33,6 +33,7 @@ class UsersController < ApplicationController
                         @outgoing.each {|item| item.update(accepted: true)}
                     end
                 end
+                redirect_to @user
         end
     end
 
