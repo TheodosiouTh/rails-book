@@ -9,6 +9,7 @@ gem 'devise'
 
 gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-facebook'
+gem "omniauth-oauth2", ">= 1.1.2"
 #End
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
