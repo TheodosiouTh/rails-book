@@ -7,7 +7,7 @@ ruby '2.3.3'
 #Begin
 gem 'devise'
 
-gem 'omniauth'
+gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-facebook'
 #End
 
