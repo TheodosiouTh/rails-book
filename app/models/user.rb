@@ -19,15 +19,20 @@ class User < ApplicationRecord
       if !auth.info.email.nil?
         user.email = auth.info.email
       else
-        user.email = "facebook#{User.all.count+1}@email.com"
+        user.email = "not_found_#{User.all.count+1}@email.com"
       end
-      puts user.email
       user.password = Devise.friendly_token[0, 20]
       name = auth.info.name.split(" ")
       user.first_name = name[0]
       if !name[1].nil?
-        user.last_name = name[0]
+        user.last_name = name[1]
       end
     end
+  end
+
+  after_create :send_welcome_email
+
+  def send_welcome_email
+    WeclomeMailer.send_welcome_email(self).deliver
   end
 end
