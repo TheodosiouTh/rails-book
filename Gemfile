@@ -5,11 +5,21 @@ ruby '2.3.3'
 
 #My Gems
 #Begin
+#handle login and sessions
 gem 'devise'
 
+#login with facebook
 gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-facebook'
 gem "omniauth-oauth2", ">= 1.1.2"
+
+#for bootstrap
+gem 'sassc', '~> 2.1.0'
+gem 'sprockets-rails', '2.3.3'
+#Bootstrap
+gem 'bootstrap-sass'
+
+gem 'jquery-rails'
 #End
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

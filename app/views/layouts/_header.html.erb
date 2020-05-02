@@ -1,29 +1,33 @@
-<header>
-    <% if current_user %>
-        <%= link_to 'Home', root_url %>
-        <%= link_to 'New Post', '/posts/new' %>
-        <%= link_to 'Find', '/users' %>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <% if current_user %>
+                <%= link_to 'Home', root_url, class: "nav-item nav-link"%>
+                <%= link_to 'New Post', '/posts/new', class: "nav-item nav-link" %>
+                <%= link_to 'Find', '/users', class: "nav-item nav-link" %>
 
-        <!--Friend Requests -->
-        <% if !@pending.empty? %>
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Pending Friend Requests(<%= @pending.count %>)
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <% @pending.each do |request| %>
-                        <li> <% user = User.find(request.from_id) %>
-                            <%= link_to "#{user.first_name} #{user.last_name}", "/user/#{user.id}" %>
-                        </li>
-                    <% end %>
-                </ul>
-            </div>
-        <% end %>
+                <!--Friend Requests -->
+                <% if !@pending.empty? %>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Pending Friend Requests(<%= @pending.count %>)
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <% @pending.each do |request| %>
+                                <li> <% user = User.find(request.from_id) %>
+                                    <%= link_to "#{user.first_name} #{user.last_name}", "/user/#{user.id}" %>
+                                </li>
+                            <% end %>
+                        </ul>
+                    </div>
+                <% end %>
 
 
-        <%= link_to 'My Profile', '/my_profile' %>
-        <%= link_to 'Log out', '/logout' %>
-    <% else %>
-        <%= link_to 'Log in', '/login' %>
-        <%= link_to 'Sign Up', '/signup' %>
-    <% end %>
-</header>
+                <%= link_to 'My Profile', '/my_profile', class: "nav-item nav-link" %>
+                <%= link_to 'Log out', '/logout', class: "nav-item nav-link" %>
+            <% else %>
+                <%= link_to 'Log in', '/login', class: "nav-item nav-link" %>
+                <%= link_to 'Sign Up', '/signup', class: "nav-item nav-link" %>
+            <% end %>
+        </div>
+    </div>
+</nav>
