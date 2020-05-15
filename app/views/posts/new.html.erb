@@ -1,13 +1,18 @@
-<h1>Create new Post</h1>
-<%= form_for @post do |f| %>
-    <%= f.label :title %> <br>
-    <%= f.text_field :title %> <br>
-    
-    <%= f.label :content %> <br>
-    <%= f.text_area :content, cols: "60", rows: "2" %> <br>
+<div class= "mycard">
+    <div class="card auth-card input-field center">
+        <h1>Create new Post</h1>
+        <%= form_for @post do |f| %>
+            <%= f.text_field :title, placeholder:"Title", class:"input-field" %>
+            
+            <%= f.text_area :content, cols: "60", rows: "2" , placeholder:"Comment", class:"materialize-textarea", id:"textarea1"%> <br>
+            <script>
+                M.textareaAutoResize($('#textarea1'));
+            </script>
+            <%= f.file_field :image %> 
 
-    <%= f.label :image, "Image:" %> 
-    <%= f.file_field :image %> <br>
-
-    <%= f.submit "Submit" %>
-<% end %>
+            <div class="sub-button">
+                <%= f.submit "Submit", class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1" %>
+            </div>
+        <% end %>
+    </div>
+</div>

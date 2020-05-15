@@ -8,16 +8,17 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag    'custom' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
 
   <body>
+    <%= render "layouts/nav" %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-    <div class="container">
-      <%= render "layouts/header" %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-
-      <%= yield %>
-    </div>
+    <%= yield %>
   </body>
 </html>

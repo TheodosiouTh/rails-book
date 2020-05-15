@@ -1,3 +1,42 @@
-body{
+// NavBar
+.navigation-item,.navigation-item:hover,.navigation-item:active{
+    text-decoration: none !important;
+    background-color: #212121;
+    color:white;
+}
 
+
+//login
+.mycard{
+    padding-top: -40px;
+}
+
+.auth-card{
+    margin: 10px auto !important;
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+}
+
+
+input:focus, textarea:focus{
+    border-bottom: 1px solid rgb(8, 93, 252) !important;
+    box-shadow: 0 1px 0 0 rgb(8, 93, 252) !important;
+}
+
+.blue[type="checkbox"]:checked + span:not(.level):after{
+    border: 2px solid rgb(8, 93, 252) !important;
+    background-color: rgb(8, 93, 252) !important;
+}
+
+span{
+    color: grey !important;
+}
+
+.links{
+    padding-top: 15px;
+}
+
+.sub-button{
+    padding-top: 10px !important;
 }

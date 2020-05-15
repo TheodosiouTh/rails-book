@@ -1,0 +1,33 @@
+<nav>
+    <div class="nav-wrapper #212121 grey darken-4">
+        <%= link_to 'RailsBook', root_url, class: "brand-logo navigation-item"%>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <% if current_user %>
+                <li><%= link_to 'Home', root_url, class: "navigation-item"%></li>
+                <li><%= link_to 'New Post', '/posts/new', class: "navigation-item" %></li>
+                <li><%= link_to 'Find', '/users', class: "navigation-item" %></li>
+
+                <li> <!--Friend Requests -->
+                    <div class="dropdown show">
+                        <a class="navigation-item" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Pending Friend Requests (<%= @pending.count%>)
+                        </a>
+                        <% if !@pending.empty? %>      
+                        <div  class="dropdown-menu drop navigation-item" aria-labelledby="dropdownMenuLink">
+                            <% @pending.each do |request| %>
+                                    <% user = User.find(request.from_id) %>
+                                    <%= link_to "#{user.first_name} #{user.last_name}", "/user/#{user.id}" , class: "dropdown-item navig" %>
+                            <% end %>
+                        </div>
+                        <% end %>
+                    </divdivdiv>
+                </li>
+
+                <li><%= link_to 'My Profile', '/my_profile', class: "navigation-item" %></li>
+                <li><%= link_to 'Log out', '/logout', class: "navigation-item" %></li>
+            <% else %>
+                <li><%= link_to 'Log in', '/login', class: "navigation-item" %></li>
+                <li><%= link_to 'Sign Up', '/signup', class: "navigation-item" %></li>
+            <% end %>
+        </ul>
+</nav>
