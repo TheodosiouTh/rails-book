@@ -1,23 +1,96 @@
-<% if @user.image.attached? %>
-    <%= image_tag(@user.image) %>
-<% else %>
-    <%= image_tag("default.jpg") %>
-<% end %>
+<div style="maxWidth: 550px; margin:0 auto;">
+    <div style=" display:flex;justifyContent:space-around;margin: 18px 0px;borderBottom:1px solid grey">
+    <% if @user.image.attached? %>
+        <%= image_tag(@user.image, class: "profile-pic")%>
+    <% else %>
+        <%= image_tag("default.jpg", class: "profile-pic")%>
+    <% end %>
+    <div style=" width:108%;">
+        <div class="name center">
+            <%= @user.first_name + @user.last_name  %> <br>
+        </div>
+        <div class="fr-button">
+            <%= form_tag('/user/'+ @user.id.to_s) do %>
+                <% if !@outgoing.empty?  %>
+                    <% if !@outgoing.first.accepted %>
+                        <%= submit_tag("Pending", name: nil,disabled: true, class:"btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1" ) %>
+                    <% end %>
+                <% elsif !@incomming.empty? %>
+                    <% if !@incomming.first.accepted %>
+                        <%= hidden_field_tag :do, "accept" %>
+                        <%= submit_tag("Accept Friend Request", name: nil, class:"btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1" ) %>
+                    <% end %>
+                <% else  %>
+                    <%= hidden_field_tag :do, "friend_request" %>
+                    <%= submit_tag("Friend Request", name: nil, class:"btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1" ) %>
+                <% end  %>
+            <% end %>
+        </div>
+    </div>
+</div>
+<hr>
+<% @posts.each do |post| %>
+    <div class="mycard card center">
+        <div class="card-image">
+            <% if post.image.attached? %>
+                <%= image_tag(post.image) %>
+            <% end %>
+        </div>
+        <div class="card-title">
+            <%= post.title %> 
+        </div>
+        <div class="card-content">
+            <%= post.content %> <br><br>
+            
+            <p style="text-align:left;">Posted By: <%= "#{User.find(post.creator_id).first_name} #{User.find(post.creator_id).last_name}" %> </p>
+        </div>
 
-Name: <%= @user.first_name + @user.last_name  %> <br>
+        <div class="card-action">
+            <%= form_for(@like, :url => { controller: 'posts', action: 'my_action'}) do |f| %>
+                <% if @likes.nil? || @likes.where(post_id: post.id).first.nil? %>
+                    <%= f.hidden_field :post_id, value: post.id %>
+                    <%= f.submit "Like", class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #d32f2f red darken-2" %>
+                <% else %>
+                    <%= f.submit "Liked", :disabled => true, class: "btn btn-lg btn-primary btn-block #424242 grey darken-3" %>
+                <% end %>
+            <% end %>
 
-<%= form_tag('/user/'+ @user.id.to_s) do %>
-    <% if !@outgoing.empty?  %>
-        <% if !@outgoing.first.accepted %>
-            <%= submit_tag("Pending", name: nil,disabled: true) %>
-        <% end %>
-    <% elsif !@incomming.empty? %>
-        <% if !@incomming.first.accepted %>
-            <%= hidden_field_tag :do, "accept" %>
-            <%= submit_tag("Accept Friend Request", name: nil) %>
-        <% end %>
-    <% else  %>
-        <%= hidden_field_tag :do, "friend_request" %>
-        <%= submit_tag("Friend Request", name: nil) %>
-    <% end  %>
+            <!-- comment -->
+            <%= form_for @comment, :url => url_for(:controller => 'posts', :action => 'my_action')  do |f| %>
+                <%= f.hidden_field :post_id, value: post.id %>
+                <%= f.text_area :content, cols: "60", rows: "2", placeholder:"Comment", class:"materialize-textarea", id:"textarea1" %> <br>
+                <script>
+                    M.textareaAutoResize($('#textarea1'));
+                </script>
+                <%= f.submit "Submit", class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1 comment-submit" %>
+            <% end %>
+        </div>
+
+        <!-- Show comments -->
+        <hr>
+        Comments(<%= Post.find(post.id).comments.count%>): <br>
+        <div style="text-align: left; padding-left: 10px;">
+            <% Post.find(post.id).comments.each do |comment| %>
+                <div class = "single-comment">
+                    <div class="left">
+                        <%= comment.content %> <br>
+                        Comment By: <%= "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}" %><br>
+                    </div>
+                    <div class="comment-like right">
+                        <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_action')) do |f| %>
+                            <% if @likes.nil? || @likes.where(comment_id: comment.id).first.nil? %>
+                                <%= f.hidden_field :post_id, value: post.id %>
+                                <%= f.hidden_field :comment_id, :value => comment.id %>
+                                <%= f.submit "Like" , class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #d32f2f red darken-2"%>
+                            <% else %>
+                                <%= f.submit "Liked", :disabled => true, class: "btn btn-lg btn-primary btn-block #424242 grey darken-3 " %>
+                            <% end %>
+                        <% end %>
+                    </div>
+                    <hr>
+                </div>
+            <% end %>
+            <br>
+        </div>
+    </div>
 <% end %>

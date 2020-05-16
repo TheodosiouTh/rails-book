@@ -47,7 +47,7 @@ class PostsController < ApplicationController
       if !params[:post][:image].nil?
         @post.image.attach(params[:post][:image])
       end
-      render "index"
+      redirect_to root_url
     else
       render "new"
     end
@@ -62,25 +62,24 @@ class PostsController < ApplicationController
     @like = Like.new
   end
 
-  def my_comment
-    @post = Post.find(params[:id])
-    @comment = Comment.new(comment_params)
-    @comment.save
-    render "index"
-  end
-
-  def my_like
-    @post = Post.find(params[:id])
-    if !params[:like].nil? && !params[:like][:comment_id].nil?
-      #like comment
-      @like = Like.new(user_id: current_user.id, comment_id: params[:like][:comment_id])
-      @like.save
-    else
-      # like post
-      @like = Like.new(user_id: current_user.id, post_id: params[:id])
-      @like.save
+  def my_action
+    if !params[:comment].nil? && params[:comment][:content]!=""
+      @post = Post.find(params[:comment][:post_id])
+      @comment = Comment.new(comment_params)
+      @comment.save
+    elsif !params[:like].nil?
+      @post = Post.find(params[:like][:post_id])
+      if !params[:like][:comment_id].nil?
+        #like comment
+        @like = Like.new(user_id: current_user.id, comment_id: params[:like][:comment_id])
+        @like.save
+      elsif !params[:like][:post_id].nil? 
+        # like post
+        @like = Like.new(user_id: current_user.id, post_id: @post.id)
+        @like.save
+      end
     end
-    render "index"
+    redirect_to root_url
   end
 
 private
@@ -91,7 +90,7 @@ private
   
   def comment_params
     params[:comment][:creator_id] = current_user.id
-    params[:comment][:post_id] = params[:id]
+    params[:comment][:post_id] = params[:comment][:post_id]
     params.require(:comment).permit(:content, :post_id ,:creator_id )
   end
 end

@@ -21,6 +21,10 @@ class UsersController < ApplicationController
         @outgoing = @outgoing.select {|fr|  fr.to_id == params[:id]}
         @incomming = @incomming.select {|fr|  fr.from_id == params[:id]}
 
+        #display user's posts
+        @posts = Post.where(creator_id: @user.id)
+        @like = Like.new
+        @comment = Comment.new
 
         if request.post?
             case params[:do]
@@ -38,6 +42,11 @@ class UsersController < ApplicationController
     end
 
     def my_profile
+        #display user's posts
+        @posts = Post.where(creator_id: current_user.id)
+        @like = Like.new
+        @comment = Comment.new
+        
         if !params[:user].nil?
             current_user.image.attach(params[:user][:image])
         end

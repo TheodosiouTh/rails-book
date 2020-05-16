@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   get 'posts/show'
 
   root to: "posts#index"
-  get '/', to: 'posts#my_like'
-  post '/', to: 'posts#my_comment'
+  post '/', to: 'posts#my_action'
 
   get '/users', to: "users#index"
   get '/user/:id', to: 'users#show', as: :user
@@ -20,7 +19,7 @@ Rails.application.routes.draw do
   post '/post/:id', to: 'posts#my_comment'
 
   
-  get '/post/:id/liked', to: 'posts#my_like'
+  get '/liked', to: 'posts#my_like'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 

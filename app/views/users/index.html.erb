@@ -1,15 +1,30 @@
 <%= form_tag('/', method: 'get') do %>
-      <%= text_field_tag(:full_name, params[:full_name]) %>
-      <%= submit_tag("Search", name: nil) %>
+        <div class="search-form ">
+            <%= text_field_tag(:full_name, params[:full_name], placeholder:"username", class:"search left") %>
+            <div style="padding-top: 10px;">
+                <%= submit_tag("Search", name: nil, class:"btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1 search-submit right") %>
+            </div>
+        </div>
 <% end %>
 
 
-<% @users.each do |usr| %>    
-    <% if usr.image.attached? %>
-        <%= image_tag(usr.image) %>
-    <% else %>
-        <%= image_tag("default.jpg") %>
+<div style="padding-top: 40px;" >
+    <% @users.each do |usr| %>
+    <div class="col s12 m7">
+        <div class="card horizontal">
+            <div class="card-image">
+                <% if usr.image.attached? %>
+                    <%= image_tag(usr.image, style: 'height:200px;width:auto;') %>
+                <% else %>
+                    <%= image_tag("default.jpg", style: 'height:200px;width:auto;') %>
+                <% end %>
+            </div>
+            <div class="card-stacked">
+                <div class="card-title username">
+                    <%= link_to usr.first_name + usr.last_name, usr %>
+                </div>
+            </div>
+        </div>
+    </div>
     <% end %>
-    <%= link_to usr.first_name + usr.last_name, usr %>
-    <br>
-<% end %>
+</div>
