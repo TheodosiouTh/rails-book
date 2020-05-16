@@ -6,8 +6,8 @@ Rails.application.initialize!
 
 
 ActionMailer::Base.smtp_settings = {
-  :user_name => 'ThanosT.',
-  :password => 'akyroskvdikos!15',
+  :user_name => ENV['SENDGRID_USERNAME'],
+  :password => ENV['SENDGRID_PASSWORD'],
   :domain => 'https://floating-stream-00113.herokuapp.com/',
   :address => 'smtp.sendgrid.net',
   :port => 465,
