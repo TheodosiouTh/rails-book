@@ -13,10 +13,9 @@ class PostsController < ApplicationController
     outgoing = current_user.outgoing
     outgoing.each do |rqst|
       if rqst.accepted
-        @friends << User.find(rqst.from_id)
+        @friends << User.find(rqst.to_id)
       end
     end
-
 
     # get posts from friends
     @friends.each do |friend|
@@ -26,6 +25,7 @@ class PostsController < ApplicationController
         @posts = @posts.or(friend.posts)
       end
     end
+    
     #get newer posts first
     if !@posts.nil?
       @posts = @posts.order(created_at: :desc)
