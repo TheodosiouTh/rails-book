@@ -25,7 +25,7 @@ Posted By: <%= "#{@creator.first_name} #{@creator.last_name}" %>
 Comments(<%= Post.find(params[:id]).comments.count%>): <br>
 <% Post.find(params[:id]).comments.each do |comment| %>
     <%= comment.content %> <br>
-    Comment By: <%= "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}" %><br>
+    Comment By: <%= link_to "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}","/user/#{comment.creator_id} %><br>
     <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_like'), method: :get ) do |f| %>
         <% if @likes.nil? || @likes.where(comment_id: comment.id).first.nil? %>
             <%= f.hidden_field :comment_id, :value => comment.id %>

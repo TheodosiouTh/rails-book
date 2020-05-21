@@ -1,0 +1,65 @@
+<% @posts.each do |post| %>
+    <div class="mycard card center">
+        <div class="card-image">
+            <% if !post.post_pic.nil? %>
+                <%= image_tag(post.post_pic) %>
+            <% end %>
+        </div>
+        <div class="card-title">
+            <%= post.title %> 
+        </div>
+        <div class="card-content">
+            <%= post.content %> <br><br>
+            
+            <p style="text-align:left;">Posted By: <%= "#{User.find(post.creator_id).first_name} #{User.find(post.creator_id).last_name}" %> </p>
+        </div>
+
+        <div class="card-action">
+            <%= form_for(@like, :url => { controller: 'posts', action: 'my_action'}) do |f| %>
+                <% if @likes.nil? || @likes.where(post_id: post.id).first.nil? %>
+                    <%= f.hidden_field :post_id, value: post.id %>
+                    <%= f.submit "Like", class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #d32f2f red darken-2" %>
+                <% else %>
+                    <%= f.submit "Liked", :disabled => true, class: "btn btn-lg btn-primary btn-block #424242 grey darken-3" %>
+                <% end %>
+            <% end %>
+
+            <!-- comment -->
+            <%= form_for @comment, :url => url_for(:controller => 'posts', :action => 'my_action')  do |f| %>
+                <%= f.hidden_field :post_id, value: post.id %>
+                <%= f.text_area :content, cols: "60", rows: "2", placeholder:"Comment", class:"materialize-textarea", id:"textarea1" %> <br>
+                <script>
+                    M.textareaAutoResize($('#textarea1'));
+                </script>
+                <%= f.submit "Submit", class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #64b5f6 blue darken-1 comment-submit" %>
+            <% end %>
+        </div>
+
+        <!-- Show comments -->
+        <hr>
+        Comments(<%= Post.find(post.id).comments.count%>): <br>
+        <div style="text-align: left; padding-left: 10px;">
+            <% Post.find(post.id).comments.each do |comment| %>
+                <div class = "single-comment">
+                    <div class="left">
+                        <%= comment.content %> <br>
+                        Comment By: <%= link_to "#{User.find(comment.creator_id).first_name} #{User.find(comment.creator_id).last_name}","/user/#{comment.creator_id}" %><br>
+                    </div>
+                    <div class="comment-like right">
+                        <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_action')) do |f| %>
+                            <% if @likes.nil? || @likes.where(comment_id: comment.id).first.nil? %>
+                                <%= f.hidden_field :post_id, value: post.id %>
+                                <%= f.hidden_field :comment_id, :value => comment.id %>
+                                <%= f.submit "Like" , class: "btn btn-lg btn-primary btn-block btn waves-effect waves-light #d32f2f red darken-2"%>
+                            <% else %>
+                                <%= f.submit "Liked", :disabled => true, class: "btn btn-lg btn-primary btn-block #424242 grey darken-3 " %>
+                            <% end %>
+                        <% end %>
+                    </div>
+                    <hr>
+                </div>
+            <% end %>
+            <br>
+        </div>
+    </div>
+<% end %>
