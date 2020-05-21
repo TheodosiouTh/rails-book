@@ -6,8 +6,8 @@
     <% @posts.each do |post| %>
         <div class="mycard card center">
             <div class="card-image">
-                <% if post.image.attached? %>
-                    <%= image_tag(post.image) %>
+                <% if !post.post_pic.nil? %>
+                    <%= image_tag(post.post_pic) %>
                 <% end %>
             </div>
             <div class="card-title">

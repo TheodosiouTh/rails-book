@@ -13,10 +13,10 @@
     <div class="col s12 m7">
         <div class="card horizontal">
             <div class="card-image">
-                <% if usr.image.attached? %>
-                    <%= image_tag(usr.image, style: 'height:200px;width:auto;') %>
+                <% if usr.profile_pic.nil? %>
+                    <%= image_tag("default.jpg", class: "profile-pic")%>
                 <% else %>
-                    <%= image_tag("default.jpg", style: 'height:200px;width:auto;') %>
+                    <%= image_tag usr.profile_pic, class: "profile-pic" %>
                 <% end %>
             </div>
             <div class="card-stacked">

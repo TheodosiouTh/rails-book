@@ -3,5 +3,4 @@ class Post < ApplicationRecord
 
     has_many :comments
     #The post can also have an image
-    has_one_attached :image
 end

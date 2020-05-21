@@ -1,7 +1,7 @@
 <%= @post.title %> <br>
 <%= @post.content %>
-<% if @post.image.attached? %>
-    <%= image_tag(@post.image) %>
+<% if !@post.post_pic.nil? %>
+    <%= image_tag(@post.post_pic) %>
 <% end %>
 
 <%= form_for(@like, url: url_for(:controller => 'posts', :action => 'my_like'), method: :get ) do |f| %>

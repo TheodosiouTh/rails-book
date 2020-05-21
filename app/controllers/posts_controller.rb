@@ -45,7 +45,8 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     if @post.save
       if !params[:post][:image].nil?
-        @post.image.attach(params[:post][:image])
+        res = Cloudinary::Uploader.upload(params[:post][:image])
+        @post.update(post_pic: res["secure_url"]);
       end
       redirect_to root_url
     else

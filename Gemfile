@@ -20,6 +20,8 @@ gem 'sprockets-rails', '2.3.3'
 gem 'bootstrap-sass'
 
 gem 'jquery-rails'
+
+gem 'cloudinary'
 #End
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

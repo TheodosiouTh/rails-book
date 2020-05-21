@@ -5,7 +5,6 @@ class User < ApplicationRecord
   has_many :posts, class_name: 'Post', foreign_key: "creator_id"
   has_many :comments
 
-  has_one_attached :image
 
 
   # Include default devise modules. Others available are:
@@ -35,4 +34,5 @@ class User < ApplicationRecord
   def send_welcome_email
     WeclomeMailer.send_welcome_email(self).deliver
   end
+
 end

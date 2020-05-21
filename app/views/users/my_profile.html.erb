@@ -1,9 +1,9 @@
 <div style="maxWidth: 550px; margin:0 auto;">
     <div style=" display:flex;justifyContent:space-around;margin: 18px 0px;borderBottom:1px solid grey">
-    <% if current_user.image.attached? %>
-        <%= image_tag(current_user.image, class: "profile-pic")%>
-    <% else %>
+    <% if current_user.profile_pic.nil? %>
         <%= image_tag("default.jpg", class: "profile-pic")%>
+    <% else %>
+        <%= image_tag current_user.profile_pic, class: "profile-pic" %>
     <% end %>
     <div style=" width:108%;">
         <div class="name center">
@@ -22,8 +22,8 @@
 <% @posts.each do |post| %>
     <div class="mycard card center">
         <div class="card-image">
-            <% if post.image.attached? %>
-                <%= image_tag(post.image) %>
+            <% if !post.post_pic.nil? %>
+                <%= image_tag(post.post_pic) %>
             <% end %>
         </div>
         <div class="card-title">

@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: thanost
+  api_key: '263457757581897'
+  api_secret: 1PLKq2768lzXPUXnjnPdsh6u58U
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: thanost
+  api_key: '263457757581897'
+  api_secret: 1PLKq2768lzXPUXnjnPdsh6u58U
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: thanost
+  api_key: '263457757581897'
+  api_secret: 1PLKq2768lzXPUXnjnPdsh6u58U
+  enhance_image_tag: true
+  static_file_support: false

@@ -48,7 +48,9 @@ class UsersController < ApplicationController
         @comment = Comment.new
         
         if !params[:user].nil?
-            current_user.image.attach(params[:user][:image])
+            #upload image to Cloudinari
+            res = Cloudinary::Uploader.upload(params[:user][:image])
+            current_user.update(profile_pic: res["secure_url"]);
         end
     end 
 end
