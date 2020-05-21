@@ -2,7 +2,8 @@
     <%= link_to 'New Post', '/posts/new' %> <br>
 </div>
 
-<% if !@posts.nil? %>
+
+<% if !@posts.first.nil? %>
     <%= render 'partials/show_posts' %> 
 <% else %>
     No post found! Go to <%= link_to 'Find', '/users' %> to find friends
