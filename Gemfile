@@ -9,7 +9,7 @@ ruby '2.3.3'
 gem 'devise'
 
 #login with facebook
-gem 'omniauth', '~> 1.9.1'
+gem 'omniauth', '~> 1.9.2'
 gem 'omniauth-facebook'
 gem "omniauth-oauth2", ">= 1.1.2"
 
